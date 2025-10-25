@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result - AarogyaAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='uploads/logo.jpeg') }}" alt="AarogyaAI logo" class="logo">
+                <h2>AarogyaAI</h2>
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/record">Record Symptoms</a>
+                <a href="/dashboard">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 2rem;">
+        {% if record %}
+        <h1>AI Analysis Result</h1>
+        
+        <div class="result-card">
+            <div class="patient-info">
+                <h3>Patient Information</h3>
+                <p><strong>Name:</strong> {{ record.patient_name }}</p>
+                <p><strong>Age:</strong> {{ record.age }} years</p>
+                <p><strong>Gender:</strong> {{ record.gender }}</p>
+            </div>
+
+            <div class="triage-result">
+                <h3>Triage Status</h3>
+                <div class="triage-badge triage-{{ record.triage_level.lower() if record.triage_level }}">
+                    <span class="triage-icon">{{ record.triage_color }}</span>
+                    <span class="triage-text">{{ record.triage_level }}</span>
+                </div>
+            </div>
+
+            <div class="diagnosis-section">
+                <h3>AI Diagnosis</h3>
+                <div class="diagnosis-box">
+                    <p class="diagnosis-name">{{ record.ai_diagnosis }}</p>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: {{ record.confidence }}%"></div>
+                    </div>
+                    <p class="confidence-text">Confidence: {{ record.confidence }}%</p>
+                </div>
+            </div>
+
+            <div class="explanation-section">
+                <h3>Clinical Explanation</h3>
+                <div class="explanation-box">
+                    <p>{{ record.explanation }}</p>
+                </div>
+            </div>
+
+            {% if record.symptoms_text %}
+            <div class="symptoms-section">
+                <h3>Recorded Symptoms (Text)</h3>
+                <p>{{ record.symptoms_text }}</p>
+            </div>
+            {% endif %}
+
+            {% if record.voice_file_url %}
+            <div class="media-section">
+                <h3>Voice Recording</h3>
+                <audio controls src="{{ record.voice_file_url }}" type="audio/webm">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            {% endif %}
+
+            {% if record.image_file_url %}
+            <div class="media-section">
+                <h3>Uploaded Image</h3>
+                <img src="{{ record.image_file_url }}" alt="Patient image" class="uploaded-image">
+            </div>
+            {% endif %}
+
+            <div class="action-buttons">
+                <a href="/abdm-record" class="btn btn-primary">Generate ABDM Record</a>
+                <a href="/record" class="btn btn-secondary">Record Another Patient</a>
+                <a href="/dashboard" class="btn btn-secondary">View Dashboard</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="error-message">
+            <h2>No Analysis Found</h2>
+            <p>We couldn't retrieve the analysis result. Please try recording the symptoms again.</p>
+            <a href="/record" class="btn btn-primary">Record Symptoms</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AarogyaAI. Empowering Healthcare Workers with AI Technology.</p>
+        </div>
+    </footer>
+</body>
+</html>

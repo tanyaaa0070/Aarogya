@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABDM Health Record - AarogyaAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='uploads/logo.jpeg') }}" alt="AarogyaAI logo" class="logo">
+                <h2>AarogyaAI</h2>
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/record">Record Symptoms</a>
+                <a href="/dashboard">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 2rem;">
+        {% if record and record.abdm_record %}
+        <h1>ABDM Health Record</h1>
+        
+        <div class="abdm-record">
+            <div class="record-header">
+                <h2>Structured Health Record</h2>
+                <p class="record-id">Record ID: #{{ record.id }}</p>
+                {% if record.abdm_record.timestamp %}
+                <p class="record-timestamp">{{ record.abdm_record.timestamp[:19] }}</p>
+                {% endif %}
+            </div>
+
+            <div class="record-body">
+                {% set abdm = record.abdm_record %}
+                
+                <div class="record-section">
+                    <h3>Patient Details</h3>
+                    <table class="record-table">
+                        <tr>
+                            <td><strong>Name:</strong></td>
+                            <td>{{ abdm.patient_name }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Age:</strong></td>
+                            <td>{{ abdm.age }} years</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gender:</strong></td>
+                            <td>{{ abdm.gender }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="record-section">
+                    <h3>Clinical Findings</h3>
+                    <table class="record-table">
+                        <tr>
+                            <td><strong>Symptoms:</strong></td>
+                            <td>{{ abdm.symptoms or 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI Diagnosis:</strong></td>
+                            <td>{{ abdm.diagnosis }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Confidence Level:</strong></td>
+                            <td>{{ abdm.confidence }}%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Triage Level:</strong></td>
+                            <td><span class="triage-badge-small triage-{{ abdm.triage_level.lower() if abdm.triage_level }}">{{ abdm.triage_level }}</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="record-section">
+                    <h3>Referral Notes</h3>
+                    <div class="notes-box">
+                        <p>{{ abdm.referral_notes }}</p>
+                    </div>
+                </div>
+
+                <div class="record-section">
+                    <h3>JSON Export</h3>
+                    <div class="json-box">
+                        <pre>{{ abdm | tojson(indent=2) }}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="record-actions">
+                <button onclick="window.print()" class="btn btn-secondary">🖨️ Print Record</button>
+                <button onclick="downloadJSON()" class="btn btn-secondary">💾 Download JSON</button>
+                <a href="/dashboard" class="btn btn-secondary">View All Records</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="error-message">
+            <h2>No Record Found</h2>
+            <p>We couldn't find the requested ABDM record. Please complete an analysis first.</p>
+            <a href="/record" class="btn btn-primary">Record Symptoms</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AarogyaAI. Empowering Healthcare Workers with AI Technology.</p>
+        </div>
+    </footer>
+
+    {% if record and record.abdm_record %}
+    <script>
+        function downloadJSON() {
+            const jsonData = {{ record.abdm_record | tojson | safe }};
+            const dataStr = JSON.stringify(jsonData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'abdm_record_{{ record.id }}.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+    {% endif %}
+</body>
+</html>

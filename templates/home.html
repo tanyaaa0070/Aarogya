@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AarogyaAI - AI Healthcare Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='uploads/logo.jpeg') }}" alt="AarogyaAI logo" class="logo">
+                <h2>AarogyaAI</h2>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="active">Home</a>
+                <a href="/record">Record Symptoms</a>
+                <a href="/dashboard">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>AarogyaAI</h1>
+                    <p class="tagline">Smart AI Assistant for Rural Healthcare</p>
+                    <p class="description">Empowering Community Health Workers with AI-powered diagnostic and triage assistance</p>
+                    <a href="/record" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="hero-image">
+                    <div class="healthcare-tribute">
+                        <div class="tribute-card">
+                            <div class="icon-placeholder doctor-icon">👨‍⚕️</div>
+                            <p>For Our Doctors</p>
+                        </div>
+                        <div class="tribute-card">
+                            <div class="icon-placeholder nurse-icon">👩‍⚕️</div>
+                            <p>For Our Nurses</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">How AarogyaAI Helps</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎤</div>
+                    <h3>Voice Recording</h3>
+                    <p>Record patient symptoms in their own words for accurate documentation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>Image Analysis</h3>
+                    <p>Upload images of skin conditions, wounds, or other visual symptoms.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✍️</div>
+                    <h3>Text Entry</h3>
+                    <p>Manually document symptoms and patient information with ease.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Analysis</h3>
+                    <p>Get instant AI-powered diagnostic suggestions and triage recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚦</div>
+                    <h3>Smart Triage</h3>
+                    <p>Color-coded priority system: Critical (🔴), Urgent (🟡), Stable (🟢).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>ABDM Records</h3>
+                    <p>Generate structured health records compatible with national standards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Record Symptoms</h3>
+                    <p>Capture patient information using voice, images, or text.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>AI Analysis</h3>
+                    <p>Our AI analyzes the symptoms and provides diagnostic suggestions.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Triage Result</h3>
+                    <p>Receive color-coded priority and treatment recommendations.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Generate Report</h3>
+                    <p>Create ABDM-compliant records and store for future reference.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Transform Healthcare Delivery?</h2>
+            <p>Join community health workers across India using AI to provide better care.</p>
+            <a href="/record" class="btn btn-primary">Start Recording Symptoms</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AarogyaAI. Empowering Healthcare Workers with AI Technology.</p>
+        </div>
+    </footer>
+</body>
+</html>
